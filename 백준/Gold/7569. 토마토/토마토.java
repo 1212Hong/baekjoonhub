@@ -16,8 +16,6 @@ public class Main {
 
 	static int[][][] map;
 
-	static boolean[][][] visited;
-
 	static int M, N, H, cnt;
 	static int[] dz = { 1, -1 };
 	static int[] dx = { 1, 0, -1, 0 };
@@ -35,7 +33,6 @@ public class Main {
 		H = Integer.parseInt(st.nextToken());
 
 		map = new int[H][N][M];
-		visited = new boolean[H][N][M];
 		boolean flag = false;
 		for (int k = 0; k < H; k++) {
 			for (int i = 0; i < N; i++) {
@@ -56,6 +53,7 @@ public class Main {
 
 			}
 		}
+
 		if (flag) {
 
 			tomato();
@@ -72,9 +70,9 @@ public class Main {
 				}
 			}
 
-			sb.append(cnt - 1);
+			sb.append(cnt - 1); // q가 비어진 이후에 불필요하게 cnt+1 이 되는 것이므로 하나 빼준다
 			System.out.println(sb);
-		} else {
+		} else {// 다 익은 상태일 경우 0 출력
 			System.out.println(0);
 		}
 
@@ -94,12 +92,11 @@ public class Main {
 				int z = current.z;
 				int x = current.x;
 				int y = current.y;
-				visited[z][x][y] = true;
 
 				// z축 이동
 				for (int k = 0; k < 2; k++) {
 					int nz = z + dz[k];
-					if (nz >= 0 && nz < H && !visited[nz][x][y] && map[nz][x][y] == 0) {
+					if (nz >= 0 && nz < H && map[nz][x][y] == 0) {
 						map[nz][x][y] = 1; // 1로변경
 						q.offer(new Point(nz, x, y));
 					}
@@ -109,7 +106,7 @@ public class Main {
 				for (int i = 0; i < 4; i++) {
 					int nx = x + dx[i];
 					int ny = y + dy[i];
-					if (isIn(nx, ny) && !visited[z][nx][ny] && map[z][nx][ny] == 0) {
+					if (isIn(nx, ny) && map[z][nx][ny] == 0) {
 						map[z][nx][ny] = 1;
 						q.offer(new Point(z, nx, ny));
 					}
