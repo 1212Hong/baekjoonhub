@@ -87,6 +87,10 @@ public class Solution {
 			}
 			return;
 		}
+		
+		if(tempCore + (corelimit-depth) < coreMax && cnt>=answer) { // 가지치기 기저조건?
+			return;
+		}
 
 		for (int d = 0; d < 4; d++) {
 			int sumLines = isConnecting(depth, d);
